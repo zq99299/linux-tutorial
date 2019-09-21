@@ -1,5 +1,4 @@
-const part1SC = require('../part1');
-const part2SC = require('../part2');
+const tutorialBasisSC = require('../tutorial-basis');
 
 module.exports = {
     title: 'Linux 教程，学习笔记',
@@ -52,17 +51,10 @@ module.exports = {
         },
         nav: [
             {text: 'Home', link: '/'},
-            {
-              text: '多级目录示例',
-              items: [
-                  {text: 'part1', link: '/part1/'},
-                  {text: 'part2', link: '/part2/'}
-              ]
-            },
+            {text: '鸟哥私房菜-基础篇', link: '/tutorial-basis/'}
         ],
         sidebar: {  // 侧边栏配置，需要展示的侧边栏需要在这里配置
-           '/part1/': part1SC(),
-           '/part2/': part2SC()
+           '/tutorial-basis/': tutorialBasisSC()
         }
     },
     plugins: [
