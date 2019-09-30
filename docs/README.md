@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /hero.png
-actionText: 前往 part1
-actionLink: /part1/
+actionText: 计算机概述
+actionLink: /tutorial-basis/00/
 features:
 - title: 持续学习
   details: 坚持每天一小时
