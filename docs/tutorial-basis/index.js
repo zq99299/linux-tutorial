@@ -14,6 +14,13 @@ module.exports = () => {
                     '01/03.md',
                     '01/04.md'
                   ]
+                },
+                {
+                  title: '02. Linux 如何学习',
+                  children:[
+                    '02/',
+                    '02/01.md'
+                  ]
                 }
             ]
         }
