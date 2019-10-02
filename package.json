@@ -5,10 +5,10 @@
   "author": "mrcode <99299684@qq.com>",
   "private": false,
   "scripts": {
-    "docs:devx": "vuepress dev docs --open",
-    "docs:dev": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js dev docs --open",
-    "docs:buildx": "vuepress build docs --debug",
-    "docs:build": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js build docs"
+    "docs:dev": "vuepress dev docs --open",
+    "docs:devx": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js dev docs --open",
+    "docs:build": "vuepress build docs --debug",
+    "docs:buildx": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js build docs"
   },
   "dependencies": {
   },
