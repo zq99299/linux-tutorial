@@ -16,5 +16,8 @@ footer: MIT Licensed | Copyright © 2018-2019 mrcode
 
 ## 内容导航
 
-- 官方教程 - 基础篇
-  - [学习 JAVA](/java/) 描述 Java 编程语言基本概念和特性的课程
+- [00. 计算机概论](/tutorial-basis/00/)
+- [01. Linux 是什么/如何学习](/tutorial-basis/01/)
+- [02. 主机规划与磁盘划分](/tutorial-basis/02/)
+- [03. 安装 CentOS 7.x](/tutorial-basis/03/)
+- [04. 首次登陆与线上求助](/tutorial-basis/04/) 
