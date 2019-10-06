@@ -21,7 +21,8 @@ module.exports = {
     // theme: 'vue',
     themeConfig: {
         docsDir: 'docs',
-        sidebar: 'auto',
+        // sidebar: 'auto',
+        smoothScroll: true, // 页面滚动效果
         sidebarDepth: 3, // 嵌套标题侧边栏提取深度，最大为 2，会提取到 h3
         lastUpdated: '上次更新: ', // string | boolean
         // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
