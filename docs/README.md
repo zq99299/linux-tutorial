@@ -20,4 +20,8 @@ footer: MIT Licensed | Copyright © 2018-2019 mrcode
 - [01. Linux 是什么/如何学习](/tutorial-basis/01/)
 - [02. 主机规划与磁盘划分](/tutorial-basis/02/)
 - [03. 安装 CentOS 7.x](/tutorial-basis/03/)
-- [04. 首次登陆与线上求助](/tutorial-basis/04/) 
+- [04. 首次登陆与线上求助](/tutorial-basis/04/)
+
+::: tip
+vuepress 构建不要使用 vuepress build docs --debug 指令中的 --debug
+:::

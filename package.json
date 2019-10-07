@@ -7,7 +7,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs --open",
     "docs:devx": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js dev docs --open",
-    "docs:build": "vuepress build docs --debug",
+    "docs:build": "vuepress build docs",
     "docs:buildx": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js build docs"
   },
   "dependencies": {
