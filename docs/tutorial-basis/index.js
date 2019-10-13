@@ -61,7 +61,8 @@ module.exports = () => {
         title: '06. Linux 文件与目录管理',
         children:[
           '06/',
-          '06/01.md'
+          '06/01.md',
+          '06/02.md'
         ]
       }
   ]
