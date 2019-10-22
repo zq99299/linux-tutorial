@@ -21,6 +21,9 @@ footer: MIT Licensed | Copyright © 2018-2019 mrcode
 - [02. 主机规划与磁盘划分](/tutorial-basis/02/)
 - [03. 安装 CentOS 7.x](/tutorial-basis/03/)
 - [04. 首次登陆与线上求助](/tutorial-basis/04/)
+- [05. Linux 的文件权限与目录配置](/tutorial-basis/05/)
+- [06. Linux 文件与目录管理](/tutorial-basis/06/)
+- [07. Linux 磁盘与文件系统管理](/tutorial-basis/07/)
 
 ::: tip
 vuepress 构建不要使用 vuepress build docs --debug 指令中的 --debug
