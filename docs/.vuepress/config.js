@@ -1,7 +1,7 @@
 const tutorialBasisSC = require('../tutorial-basis');
 
 module.exports = {
-    title: 'Linux 教程，学习笔记',
+    title: 'Linux 系统教程（笔记）',
     description: 'linux 系统教程学习笔记',
     base: '/linux-tutorial/', // gh-page 中是增加了项目名
     dest: 'build/.vuepress/dist',  // build 时构建的文件放在那里？
