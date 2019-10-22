@@ -32,7 +32,6 @@ footer: MIT Licensed | Copyright © mrcode
 - [中文文案排版指北](https://github.com/mzlogin/chinese-copywriting-guidelines)
 - [GFM 规范](https://github.github.com/gfm/)
 
-
 ::: tip
 vuepress 构建不要使用 vuepress build docs --debug 指令中的 --debug
 :::
