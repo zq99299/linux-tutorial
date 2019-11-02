@@ -63,8 +63,8 @@ module.exports = {
         ['@vuepress/pwa', {
             serviceWorker: true,
             updatePopup: {
-                message: "pwa:有新内容更新啦~",
-                buttonText: "立即获取新内容"
+                message: "有新内容更新啦~",
+                buttonText: "立即获取新内容（点击后会自动刷新，变动较大可能会比较明显看到页面变化）"
             }
         }],
         ['@vuepress/medium-zoom', {
