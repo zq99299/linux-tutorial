@@ -24,6 +24,10 @@ footer: MIT Licensed | Copyright © mrcode
 - [05. Linux 的文件权限与目录配置](./tutorial-basis/05/)
 - [06. Linux 文件与目录管理](./tutorial-basis/06/)
 - [07. Linux 磁盘与文件系统管理](./tutorial-basis/07/)
+- [08. 文件与文件系统的压缩、打包与备份](./tutorial-basis/08/)
+- [09. vim 程序编辑器](./tutorial-basis/09/)
+- [10. 认识与学习 BASH](./tutorial-basis/10/)
+- [11. 正则表达式与文件格式化处理](./tutorial-basis/11/)
 
 ## 规约
 
