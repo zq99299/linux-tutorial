@@ -11,11 +11,14 @@
     "docs:buildx": "node --max_old_space_size=4096 ./node_modules/vuepress/cli.js build docs"
   },
   "dependencies": {
+    "@vssue/api-github-v3": "^1.4.0",
+    "@vssue/vuepress-plugin-vssue": "^1.4.2",
+    "vuepress-plugin-code-copy": "^1.0.4"
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.2.0",
     "@vuepress/plugin-medium-zoom": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
-	  "vuepress": "^1.2.0"
+    "vuepress": "^1.2.0"
   }
 }
