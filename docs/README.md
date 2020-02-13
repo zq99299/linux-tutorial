@@ -28,6 +28,8 @@ footer: MIT Licensed | Copyright © mrcode
 - [09. vim 程序编辑器](./tutorial-basis/09/)
 - [10. 认识与学习 BASH](./tutorial-basis/10/)
 - [11. 正则表达式与文件格式化处理](./tutorial-basis/11/)
+- [12. 学习 Shell Scripts](./tutorial-basis/12/)
+- [13. Linux 账号管理与 ACL 权限设置](./tutorial-basis/13/)
 
 ## 规约
 
