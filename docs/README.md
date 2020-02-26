@@ -30,6 +30,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [11. 正则表达式与文件格式化处理](./tutorial-basis/11/)
 - [12. 学习 Shell Scripts](./tutorial-basis/12/)
 - [13. Linux 账号管理与 ACL 权限设置](./tutorial-basis/13/)
+- [14. 磁盘配额（Quota）与进阶文件系统管理](./tutorial-basis/14/)
 
 ## 规约
 
