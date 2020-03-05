@@ -31,6 +31,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [12. 学习 Shell Scripts](./tutorial-basis/12/)
 - [13. Linux 账号管理与 ACL 权限设置](./tutorial-basis/13/)
 - [14. 磁盘配额（Quota）与进阶文件系统管理](./tutorial-basis/14/)
+- [15. 例行性工作排程（crontab）](./tutorial-basis/15/)
 
 ## 规约
 
