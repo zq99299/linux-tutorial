@@ -34,6 +34,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [15. 例行性工作排程（crontab）](./tutorial-basis/15/)
 - [16. 进程管理与 SELinux 初探](./tutorial-basis/16/)
 - [17. 认识系统服务（daemons）](./tutorial-basis/17/)
+- [18. 认识与分析登录文件](./tutorial-basis/18/)
 
 ## 规约
 
