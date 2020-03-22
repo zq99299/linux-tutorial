@@ -35,6 +35,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [16. 进程管理与 SELinux 初探](./tutorial-basis/16/)
 - [17. 认识系统服务（daemons）](./tutorial-basis/17/)
 - [18. 认识与分析登录文件](./tutorial-basis/18/)
+- [19. 开机流程、模块管理与 Loader](./tutorial-basis/19/)
 
 ## 规约
 
