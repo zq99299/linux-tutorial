@@ -81,6 +81,15 @@ module.exports = {
           clientId: '500cfbaf262952a41fc3',
           clientSecret: '47496d95d29db070adc5e6930b8006420efa702b'
         }],
-        ['vuepress-plugin-code-copy', true]
+        ['vuepress-plugin-code-copy', true],
+        ['@vuepress/last-updated',{
+          transformer: (timestamp, lang) => {
+            // 不要忘了安装 moment
+            const moment = require('moment')
+            moment.locale(lang)
+            return moment(timestamp).fromNow()
+          }
+        }
+      ]
     ]
 }
