@@ -36,6 +36,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [17. 认识系统服务（daemons）](./tutorial-basis/17/)
 - [18. 认识与分析登录文件](./tutorial-basis/18/)
 - [19. 开机流程、模块管理与 Loader](./tutorial-basis/19/)
+- [20. 基础系统设置与备份策略](./tutorial-basis/20/)
 
 ## 规约
 
