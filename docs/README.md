@@ -37,6 +37,7 @@ footer: MIT Licensed | Copyright © mrcode
 - [18. 认识与分析登录文件](./tutorial-basis/18/)
 - [19. 开机流程、模块管理与 Loader](./tutorial-basis/19/)
 - [20. 基础系统设置与备份策略](./tutorial-basis/20/)
+- [21. 软件安装：原始码与 Tarball](./tutorial-basis/21/)
 
 ## 规约
 
