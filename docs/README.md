@@ -39,6 +39,10 @@ footer: MIT Licensed | Copyright © mrcode
 - [20. 基础系统设置与备份策略](./tutorial-basis/20/)
 - [21. 软件安装：原始码与 Tarball](./tutorial-basis/21/)
 - [22. 软件安装 RPM、SRPM、YUM](./tutorial-basis/22/)
+- [23. X Window 设置介绍 （不学习）](http://linux.vbird.org/linux_basic/0590xwindow.php)
+- [24. Linux 核心编译与管理（不学习）](http://linux.vbird.org/linux_basic/0540kernel.php)
+
+对于不学习的后两章，笔者觉得没有必要花费专门的时间来学习了，对于了解 Linux 和一个 JAVA 程序员来说，目前是没有必要学习的，感觉有点遥远和比较深入了
 
 ## 规约
 
