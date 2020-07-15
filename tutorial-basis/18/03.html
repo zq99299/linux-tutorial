@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>登录文件的轮替 logrotate | Linux 系统教程（笔记）</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    
+    <meta name="description" content="linux 系统教程学习笔记">
+    <link rel="preload" href="/linux-tutorial/assets/css/0.styles.af9c0827.css" as="style"><link rel="preload" href="/linux-tutorial/assets/js/app.ea1d0a47.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/2.c8ccd0dd.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/42.dfe7a710.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/16.dd24774b.js" as="script"><link rel="prefetch" href="/linux-tutorial/assets/js/10.ef60d762.js"><link rel="prefetch" href="/linux-tutorial/assets/js/100.97bc2b5d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/101.351d7309.js"><link rel="prefetch" href="/linux-tutorial/assets/js/102.90e1e11e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/103.2305fc8c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/104.fdedff04.js"><link rel="prefetch" href="/linux-tutorial/assets/js/105.765b6a5e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/106.5b3371f0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/107.5f5db6f9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/108.fbdae5ff.js"><link rel="prefetch" href="/linux-tutorial/assets/js/109.d97d4053.js"><link rel="prefetch" href="/linux-tutorial/assets/js/11.3aac1a20.js"><link rel="prefetch" href="/linux-tutorial/assets/js/110.4a80f306.js"><link rel="prefetch" href="/linux-tutorial/assets/js/111.8a2c3fb4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/112.2b660b90.js"><link rel="prefetch" href="/linux-tutorial/assets/js/113.6af145de.js"><link rel="prefetch" href="/linux-tutorial/assets/js/114.fb21a791.js"><link rel="prefetch" href="/linux-tutorial/assets/js/115.850381dd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/116.c5a3c25c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/117.9c84a2f8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/118.2dea3311.js"><link rel="prefetch" href="/linux-tutorial/assets/js/119.67718ca2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/12.722033e9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/120.7954a798.js"><link rel="prefetch" href="/linux-tutorial/assets/js/121.85179870.js"><link rel="prefetch" href="/linux-tutorial/assets/js/122.fdbe08a8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/123.678347bb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/124.704fa8b1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/125.67c59043.js"><link rel="prefetch" href="/linux-tutorial/assets/js/126.3db4d3f7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/127.5873c269.js"><link rel="prefetch" href="/linux-tutorial/assets/js/128.30edd97c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/129.93064c6d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/13.69d35cba.js"><link rel="prefetch" href="/linux-tutorial/assets/js/130.fc5cf7b8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/131.d95b99d5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/132.5f4792dc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/133.20adfc72.js"><link rel="prefetch" href="/linux-tutorial/assets/js/134.7d02ff14.js"><link rel="prefetch" href="/linux-tutorial/assets/js/135.7c22cd89.js"><link rel="prefetch" href="/linux-tutorial/assets/js/136.91038e5b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/137.16d31ae4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/138.56430d58.js"><link rel="prefetch" href="/linux-tutorial/assets/js/139.4184fc0b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/14.607ce558.js"><link rel="prefetch" href="/linux-tutorial/assets/js/140.4a6210e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/141.58a7c0fb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/142.79dcb449.js"><link rel="prefetch" href="/linux-tutorial/assets/js/143.3a9b4aac.js"><link rel="prefetch" href="/linux-tutorial/assets/js/144.0b6cd3c4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/145.e43bec3a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/146.ff3782ab.js"><link rel="prefetch" href="/linux-tutorial/assets/js/147.b705dab5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/148.dada2306.js"><link rel="prefetch" href="/linux-tutorial/assets/js/149.a2532617.js"><link rel="prefetch" href="/linux-tutorial/assets/js/15.6186f1c1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/150.32974280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/151.b06857d0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/152.a5780795.js"><link rel="prefetch" href="/linux-tutorial/assets/js/153.51b6f5b4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/154.6fd3d1ce.js"><link rel="prefetch" href="/linux-tutorial/assets/js/155.4bc6bbee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/156.b68105fe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/157.23c06658.js"><link rel="prefetch" href="/linux-tutorial/assets/js/158.c6892788.js"><link rel="prefetch" href="/linux-tutorial/assets/js/159.f01c6fe5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/160.1fe7b7b2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/161.80f594f3.js"><link rel="prefetch" href="/linux-tutorial/assets/js/162.628b3ad5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/163.a983a5af.js"><link rel="prefetch" href="/linux-tutorial/assets/js/164.190ca3e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/165.8a93dcc6.js"><link rel="prefetch" href="/linux-tutorial/assets/js/166.81ada880.js"><link rel="prefetch" href="/linux-tutorial/assets/js/167.de10f0b4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/168.df7caf2a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/169.ca4df407.js"><link rel="prefetch" href="/linux-tutorial/assets/js/17.21277700.js"><link rel="prefetch" href="/linux-tutorial/assets/js/170.da2f114d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/171.be554271.js"><link rel="prefetch" href="/linux-tutorial/assets/js/172.b8349b6b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/173.1c5fb7fc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/174.1309c3c2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/175.dabeadfe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/176.dc2b1382.js"><link rel="prefetch" href="/linux-tutorial/assets/js/177.43492280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/178.e2ba1895.js"><link rel="prefetch" href="/linux-tutorial/assets/js/18.66c3dd23.js"><link rel="prefetch" href="/linux-tutorial/assets/js/19.dee99007.js"><link rel="prefetch" href="/linux-tutorial/assets/js/20.5cebeb18.js"><link rel="prefetch" href="/linux-tutorial/assets/js/21.fc404678.js"><link rel="prefetch" href="/linux-tutorial/assets/js/22.358b42ed.js"><link rel="prefetch" href="/linux-tutorial/assets/js/23.393a8dfc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/24.bdde7a66.js"><link rel="prefetch" href="/linux-tutorial/assets/js/25.7c436b9c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/26.67950be4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/27.8355597c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/28.a097854a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/29.be98c20b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/3.6fe464e4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/30.1ee1ec2d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/31.f3306313.js"><link rel="prefetch" href="/linux-tutorial/assets/js/32.7cc8d2d2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/33.a89f972e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/34.c7ce12be.js"><link rel="prefetch" href="/linux-tutorial/assets/js/35.463145fe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/36.8a72f4b5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/37.96968c51.js"><link rel="prefetch" href="/linux-tutorial/assets/js/38.66e6607a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/39.5668451e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/4.921fb6cc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/40.173ac34f.js"><link rel="prefetch" href="/linux-tutorial/assets/js/41.bc977280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/43.4a74544d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/44.31e555e5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/45.21ba78bd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/46.1eee8453.js"><link rel="prefetch" href="/linux-tutorial/assets/js/47.7b5dd3b0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/48.f5071610.js"><link rel="prefetch" href="/linux-tutorial/assets/js/49.d9de01e5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/5.c71c12e3.js"><link rel="prefetch" href="/linux-tutorial/assets/js/50.66b286cd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/51.8318e2ee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/52.4f0249a9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/53.3f24081d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/54.3ab2925b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/55.04d08508.js"><link rel="prefetch" href="/linux-tutorial/assets/js/56.ba0ab8fb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/57.90ab3f74.js"><link rel="prefetch" href="/linux-tutorial/assets/js/58.ee41c106.js"><link rel="prefetch" href="/linux-tutorial/assets/js/59.289bec38.js"><link rel="prefetch" href="/linux-tutorial/assets/js/6.df51e7db.js"><link rel="prefetch" href="/linux-tutorial/assets/js/60.da6cf496.js"><link rel="prefetch" href="/linux-tutorial/assets/js/61.a0df86b5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/62.ee5099e1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/63.6bf86d2c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/64.4ffe638f.js"><link rel="prefetch" href="/linux-tutorial/assets/js/65.d12dfecb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/66.07c47ba9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/67.2e420d6a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/68.3883a27d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/69.fa8ef1e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/7.ada70172.js"><link rel="prefetch" href="/linux-tutorial/assets/js/70.6807cdfd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/71.38ee562a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/72.b4800f40.js"><link rel="prefetch" href="/linux-tutorial/assets/js/73.71c5c5d1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/74.72192f58.js"><link rel="prefetch" href="/linux-tutorial/assets/js/75.1eea1037.js"><link rel="prefetch" href="/linux-tutorial/assets/js/76.c0fe2c48.js"><link rel="prefetch" href="/linux-tutorial/assets/js/77.ee0c5c75.js"><link rel="prefetch" href="/linux-tutorial/assets/js/78.25007bb8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/79.7b0f0635.js"><link rel="prefetch" href="/linux-tutorial/assets/js/8.2392239c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/80.28ba4b5a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/81.87f7c17a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/82.695b7cfb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/83.c5bf5183.js"><link rel="prefetch" href="/linux-tutorial/assets/js/84.13ee5128.js"><link rel="prefetch" href="/linux-tutorial/assets/js/85.51847a80.js"><link rel="prefetch" href="/linux-tutorial/assets/js/86.41a8bf67.js"><link rel="prefetch" href="/linux-tutorial/assets/js/87.3412e840.js"><link rel="prefetch" href="/linux-tutorial/assets/js/88.f1b459ee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/89.8f3f7604.js"><link rel="prefetch" href="/linux-tutorial/assets/js/9.d9ca4ba1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/90.46ea834a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/91.09b89aef.js"><link rel="prefetch" href="/linux-tutorial/assets/js/92.7e0eb989.js"><link rel="prefetch" href="/linux-tutorial/assets/js/93.60c7f110.js"><link rel="prefetch" href="/linux-tutorial/assets/js/94.323b3961.js"><link rel="prefetch" href="/linux-tutorial/assets/js/95.2b74a2ad.js"><link rel="prefetch" href="/linux-tutorial/assets/js/96.d8edbd19.js"><link rel="prefetch" href="/linux-tutorial/assets/js/97.a569039c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/98.b41a3d34.js"><link rel="prefetch" href="/linux-tutorial/assets/js/99.86d37ca7.js">
+    <link rel="stylesheet" href="/linux-tutorial/assets/css/0.styles.af9c0827.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/linux-tutorial/" class="home-link router-link-active"><!----> <span class="site-name">Linux 系统教程（笔记）</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/linux-tutorial/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/linux-tutorial/tutorial-basis/" class="nav-link router-link-active">
+  鸟哥私房菜-基础篇
+</a></div><div class="nav-item"><a href="/linux-tutorial/discuss.html" class="nav-link">
+  参与讨论
+</a></div><div class="nav-item"><a href="https://github.com/zq99299/repository-summary" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  笔记精选汇总
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/zq99299/linux-tutorial" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/linux-tutorial/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/linux-tutorial/tutorial-basis/" class="nav-link router-link-active">
+  鸟哥私房菜-基础篇
+</a></div><div class="nav-item"><a href="/linux-tutorial/discuss.html" class="nav-link">
+  参与讨论
+</a></div><div class="nav-item"><a href="https://github.com/zq99299/repository-summary" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  笔记精选汇总
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/zq99299/linux-tutorial" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/linux-tutorial/tutorial-basis/" class="sidebar-link">Linux 基础篇（鸟哥私房菜）- 第四版</a></li><li><a href="/linux-tutorial/tutorial-basis/00/" class="sidebar-link">00. 计算机概论</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>01. Linux 是什么/如何学习</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>02. 主机规划与磁盘分区</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>03. 安装 CentOS 7.x</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>04. 首次登陆与线上求助</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>05. Linux 的文件权限与目录配置</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>06. Linux 文件与目录管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>07. Linux 磁盘与文件系统管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>08. 文件与文件系统的压缩、打包与备份</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>09. vim 程序编辑器</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>10. 认识与学习 BASH</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>11. 正则表达式与文件格式化处理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>12. 学习 Shell Scripts</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>13. Linux 账号管理与 ACL 权限设置</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>14. 磁盘配额（Quota）与进阶文件系统管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>15. 例行性工作排程（crontab）</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>16. 进程管理与 SELinux 初探</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>17. 认识系统服务（daemons）</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>18. 认识与分析登录文件</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/linux-tutorial/tutorial-basis/18/" class="sidebar-link">认识与分析登录文件</a></li><li><a href="/linux-tutorial/tutorial-basis/18/01.html" class="sidebar-link">什么是登录文件</a></li><li><a href="/linux-tutorial/tutorial-basis/18/02.html" class="sidebar-link">rsyslog.service 记录登录文件的服务</a></li><li><a href="/linux-tutorial/tutorial-basis/18/03.html" class="active sidebar-link">登录文件的轮替 logrotate</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/18/03.html#logrotate-的配置文件" class="sidebar-link">logrotate 的配置文件</a></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/18/03.html#实际测试-logrotate-动作" class="sidebar-link">实际测试 logrotate 动作</a></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/18/03.html#自定义日志文件的轮替功能" class="sidebar-link">自定义日志文件的轮替功能</a></li></ul></li><li><a href="/linux-tutorial/tutorial-basis/18/04.html" class="sidebar-link">systemd-journald.service 简介</a></li><li><a href="/linux-tutorial/tutorial-basis/18/05.html" class="sidebar-link">分析登录文件</a></li><li><a href="/linux-tutorial/tutorial-basis/18/06.html" class="sidebar-link">重点回顾</a></li><li><a href="/linux-tutorial/tutorial-basis/18/07.html" class="sidebar-link">本章习题</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>19. 开机流程、模块管理与 Loader</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>20. 基础系统设置与备份策略</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>21. 软件安装：原始码与 Tarball</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>22. 软件安装 RPM、SRPM、YUM</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="登录文件的轮替-logrotate"><a href="#登录文件的轮替-logrotate" class="header-anchor">#</a> 登录文件的轮替 logrotate</h1> <p>轮替，就是定时的执行备份操作，可以查看 <code>/etc/cron.daily/logrotate</code> ，里面配置了文件轮替行为</p> <h2 id="logrotate-的配置文件"><a href="#logrotate-的配置文件" class="header-anchor">#</a> logrotate 的配置文件</h2> <p>配置文件如下：</p> <ul><li><code>/etc/logrotate.conf</code>：配置文件</li> <li><code>/etc/logrotate.d/</code>：该目录下是细化的分类，比如你有你自己的软件需要轮替操作，就可以放到该目录下</li></ul> <p>logrotate 的主要功能是将旧的日志文件移动成旧文件，并且重新建立一个新的空的文件。它的执行结果如下图示意：</p> <p><img src="/linux-tutorial/assets/img/image-20200322154057573.962b1ea9.png" alt="image-20200322154057573"></p> <p>上图是一个过程，后面的图示已经包含了前面的过程。</p> <ul><li>第 1 次执行完 rotate 后：原本的 messages 文件变成了 messages.1，而且会制造一个空的 message 出来</li> <li>第 2 次：messages.1 变成了 messages.2</li></ul> <p>以此下去，如果我们设置值保留三个文件日志信息，那么当执行第 4 次的时候，则 messages.3 会被移除，也就是新的备份文件会将旧的给覆盖掉</p> <p>那么多久执行一次 logrotate 呢？保留几个备份文件呢？这些都在 logrotate.conf 中配置的</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/logrotate.conf </span>
+<span class="token comment"># 下面是预设的默认值，如果某些文件又设置了其他的参数，那么就以它自己的设置为准</span>
+
+<span class="token comment"># see &quot;man logrotate&quot; for details</span>
+<span class="token comment"># rotate log files weekly</span>
+weekly				<span class="token comment"># 每周进行一次</span>
+
+<span class="token comment"># keep 4 weeks worth of backlogs</span>
+rotate <span class="token number">4</span>			<span class="token comment"># 保留几个日志文件，这里预设是 4 个</span>
+
+<span class="token comment"># create new (empty) log files after rotating old ones</span>
+create				<span class="token comment"># 是否建立一个新的文件来继续存储新的数据</span>
+
+<span class="token comment"># use date as a suffix of the rotated file</span>
+dateext				<span class="token comment"># 是否为轮替的文件加上日期作为文件名</span>
+
+<span class="token comment"># uncomment this if you want your log files compressed</span>
+<span class="token comment">#compress			# 轮替的文件是否需要压缩</span>
+
+<span class="token comment"># RPM packages drop log rotation information into this directory</span>
+include /etc/logrotate.d		<span class="token comment"># 该目录中的所有文件都读进来执行 rotate 的工作</span>
+
+<span class="token comment"># no packages own wtmp and btmp -- we'll rotate them here</span>
+/var/log/wtmp <span class="token punctuation">{</span>		<span class="token comment"># 仅针对  /var/log/wtmp 所设置的参数</span>
+    monthly									<span class="token comment"># 每个月一次</span>
+    create 0664 root utmp		<span class="token comment"># 创建新文件的权限所属账户/群组</span>
+    minsize 1M							<span class="token comment"># 文件容量超过 1M 后才进行 rotate</span>
+    rotate <span class="token number">1</span>								<span class="token comment"># 仅保留一个，即只有 wtmp.1 </span>
+<span class="token punctuation">}</span>
+<span class="token comment"># wtmp 可记录登陆者与系统重新启动时的实际与来源主机以及登录期间的实际</span>
+/var/log/btmp <span class="token punctuation">{</span>
+    missingok
+    monthly
+    create 0600 root utmp
+    rotate <span class="token number">1</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># system-specific logs may be also be configured here</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><p>从配置文件中看到 <code>/etc/logrotate.d/</code> 目录是该配置文件的规范支持。用途就是方便添加自定义的配置文件，而不用把所有配置都写到主要的配置文件中。比如你开发了一个软件，有轮替日志文件的需求，就可以吧配置文件放到该目录下，就可以了</p> <p>下面以 <code>rsyslog.service</code> 服务的文件，来设置它的 rotate</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 该文件是存在的，我们来修改与学习</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/logrotate.d/syslog </span>
+/var/log/cron
+/var/log/maillog
+/var/log/messages
+/var/log/secure
+/var/log/spooler
+<span class="token punctuation">{</span>
+    missingok
+    sharedscripts
+    postrotate
+        /bin/kill -HUP <span class="token variable"><span class="token variable">`</span><span class="token function">cat</span> /var/run/syslogd.pid <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null<span class="token variable">`</span></span> <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null <span class="token operator">||</span> <span class="token boolean">true</span>
+    endscript
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>下面来看看设置的语法</p> <ul><li><p>文件名：可以用空格符号分割多个文件</p></li> <li><p>参数：<code>{}</code> 中的配置</p></li> <li><p>执行脚本：</p> <p>可以调用外部指令来进行额外的命令，需要与 <code>sharedscripts...endscript</code> 的设置，可用环境含义：</p> <ul><li><p>prerotate：在启动 logrotate 之前进行的指令，例如修改日志文件的属性等操作</p></li> <li><p>postrotate：在做完 logrotate 之后启动的指令，例如重新启动（kill -HUP） 某个服务</p></li></ul></li></ul> <p>​        上面两个钩子在对于已加上特殊属性的文件处理上面，很重要方便</p> <p>那么上述文件的配置含义为：</p> <ul><li>该配置只对上述列出来的 5 个文件有效</li> <li>每周一次、保留 4 个、且轮替下来的文件不进行压缩；这些都是默认值，并没有在该文件中配置</li> <li>轮替完成后（postrotate）取得 syslog 的 PID 后，以 kill-HUP 方式重新启动 syslogd</li></ul> <p>但是如果有特殊属性的话，比如使用了 <code>chattr +a</code>，那么该文件无法删除，也就是无法被更名，而 logrotate 的工作原理就是将当前的文件更名。这个时候就可以使用上面提供的两个钩子方法来解决这个问题</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/logrotate.d/syslog </span>
+/var/log/cron
+/var/log/maillog
+/var/log/messages
+/var/log/secure
+/var/log/spooler
+<span class="token punctuation">{</span>
+	  sharedscripts
+    prerotate
+    	/usr/bin/chattr -a /var/log/messages
+    endscript
+    missingok
+    sharedscripts
+    postrotate
+        /bin/kill -HUP <span class="token variable"><span class="token variable">`</span><span class="token function">cat</span> /var/run/syslogd.pid <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null<span class="token variable">`</span></span> <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null <span class="token operator">||</span> <span class="token boolean">true</span>
+				/usr/bin/chattr +a /var/log/messages   
+   endscript
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>提示下：<code>kill -HUP</code> 指定的信号量含义是将 rsyslog.conf 资料重新读取一次，可以理解为 reload 操作</p> <h2 id="实际测试-logrotate-动作"><a href="#实际测试-logrotate-动作" class="header-anchor">#</a> 实际测试 logrotate 动作</h2> <p>上述测试完成之后，测试下</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">logrotate</span> <span class="token punctuation">[</span>-vf<span class="token punctuation">]</span> logfile
+
+选项与参数：
+	-v：启动显示模式，会显示 <span class="token function">logrotate</span> 运行的过程
+	-f：无论是否符合配置文件的数据，强制每个日志文件都进行 rotate 的操作
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>下面执行一次看看整个流程</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># logrotate -v /etc/logrotate.conf </span>
+reading config <span class="token function">file</span> /etc/logrotate.conf		<span class="token comment"># 读取主要的配置文件</span>
+including /etc/logrotate.d								<span class="token comment"># 读取模块化的外部配置文件</span>
+reading config <span class="token function">file</span> bootlog
+reading config <span class="token function">file</span> chrony
+reading config <span class="token function">file</span> cups
+<span class="token punctuation">..</span><span class="token punctuation">..</span>
+Allocating <span class="token builtin class-name">hash</span> table <span class="token keyword">for</span> state file, size <span class="token number">15360</span> B
+
+Handling <span class="token number">15</span> logs							<span class="token comment"># 共有 15 个日志文件</span>
+<span class="token punctuation">..</span>.
+rotating pattern: /var/log/cron
+/var/log/maillog
+/var/log/messages
+/var/log/secure
+/var/log/spooler
+ weekly <span class="token punctuation">(</span><span class="token number">4</span> rotations<span class="token punctuation">)</span>
+empty log files are rotated, old logs are removed
+considering log /var/log/cron
+  log does not need rotating <span class="token punctuation">(</span>log has been rotated at <span class="token number">2020</span>-3-15 <span class="token number">21</span>:37, that is not week ago yet<span class="token punctuation">)</span>
+considering log /var/log/maillog
+  log does not need rotating <span class="token punctuation">(</span>log has been rotated at <span class="token number">2020</span>-3-15 <span class="token number">21</span>:37, that is not week ago yet<span class="token punctuation">)</span>
+considering log /var/log/messages		<span class="token comment"># 处理 messages 文件</span>
+	<span class="token comment"># 由于时间未到，不需要操作</span>
+  log does not need rotating <span class="token punctuation">(</span>log has been rotated at <span class="token number">2020</span>-3-15 <span class="token number">21</span>:37, that is not week ago yet<span class="token punctuation">)</span>
+considering log /var/log/secure
+  log does not need rotating <span class="token punctuation">(</span>log has been rotated at <span class="token number">2020</span>-3-15 <span class="token number">21</span>:37, that is not week ago yet<span class="token punctuation">)</span>
+considering log /var/log/spooler
+  log does not need rotating <span class="token punctuation">(</span>log has been rotated at <span class="token number">2020</span>-3-15 <span class="token number">21</span>:37, that is not week ago yet<span class="token punctuation">)</span>
+not running postrotate script, since no logs were rotated
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 范例 2：强制 logrotate 操作</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># logrotate -v /etc/logrotate.conf </span>
+rotating pattern: /var/log/cron
+/var/log/maillog
+/var/log/messages
+/var/log/secure
+/var/log/spooler
+ forced from <span class="token builtin class-name">command</span> line <span class="token punctuation">(</span><span class="token number">4</span> rotations<span class="token punctuation">)</span>
+empty log files are rotated, old logs are removed
+considering log /var/log/cron
+  log needs rotating
+considering log /var/log/maillog
+  log needs rotating
+considering log /var/log/messages
+  log needs rotating
+considering log /var/log/secure
+  log needs rotating
+considering log /var/log/spooler
+  log needs rotating
+rotating log /var/log/cron, log-<span class="token operator">&gt;</span>rotateCount is <span class="token number">4</span>
+dateext suffix <span class="token string">'-20200316'</span>
+glob pattern <span class="token string">'-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'</span>
+rotating log /var/log/maillog, log-<span class="token operator">&gt;</span>rotateCount is <span class="token number">4</span>
+dateext suffix <span class="token string">'-20200316'</span>
+glob pattern <span class="token string">'-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'</span>
+rotating log /var/log/messages, log-<span class="token operator">&gt;</span>rotateCount is <span class="token number">4</span>
+dateext suffix <span class="token string">'-20200316'</span>
+glob pattern <span class="token string">'-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'</span>
+rotating log /var/log/secure, log-<span class="token operator">&gt;</span>rotateCount is <span class="token number">4</span>
+glob pattern <span class="token string">'-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'</span>
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:cron_log_t:s0
+renaming /var/log/cron to /var/log/cron-20200316
+creating new /var/log/cron mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:var_log_t:s0
+renaming /var/log/maillog to /var/log/maillog-20200316
+creating new /var/log/maillog mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:var_log_t:s0
+<span class="token comment"># 重命名了文件，然后又创建了一个文件</span>
+renaming /var/log/messages to /var/log/messages-20200316
+creating new /var/log/messages mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:var_log_t:s0
+renaming /var/log/secure to /var/log/secure-20200316
+creating new /var/log/secure mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:var_log_t:s0
+renaming /var/log/spooler to /var/log/spooler-20200316
+creating new /var/log/spooler mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+running postrotate script
+removing old log /var/log/cron-20200225
+removing old log /var/log/maillog-20200225
+removing old log /var/log/messages-20200225
+removing old log /var/log/secure-20200225
+removing old log /var/log/spooler-20200225
+
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ll /var/log/messages*; lsattr /var/log/messages</span>
+-rw-------. <span class="token number">1</span> root root    <span class="token number">345</span> Mar <span class="token number">16</span> 00:01 /var/log/messages
+-rw-------. <span class="token number">1</span> root root <span class="token number">756608</span> Mar  <span class="token number">1</span> <span class="token number">18</span>:30 /var/log/messages-20200301
+-rw-------. <span class="token number">1</span> root root <span class="token number">270175</span> Mar  <span class="token number">8</span> <span class="token number">12</span>:23 /var/log/messages-20200308
+-rw-------. <span class="token number">1</span> root root <span class="token number">187277</span> Mar <span class="token number">15</span> <span class="token number">21</span>:30 /var/log/messages-20200315
+-rw-------. <span class="token number">1</span> root root  <span class="token number">12425</span> Mar <span class="token number">16</span> 00:00 /var/log/messages-20200316
+-----a---------- /var/log/messages
+<span class="token comment"># 上面我们配置的处理特殊属性的脚本生效了</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br></div></div><p>由于 logrotate 已经加入到 crontab 里面了，只需要留意下 <code>/var/log/messages</code> 是否有类似如下的信息</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># grep 'www.rsyslog.com' /var/log/messages</span>
+Mar <span class="token number">16</span> 00:00:42 study rsyslogd: <span class="token punctuation">[</span>origin <span class="token assign-left variable">software</span><span class="token operator">=</span><span class="token string">&quot;rsyslogd&quot;</span> <span class="token assign-left variable">swVersion</span><span class="token operator">=</span><span class="token string">&quot;8.24.0-38.el7&quot;</span> x-pid<span class="token operator">=</span><span class="token string">&quot;7107&quot;</span> x-info<span class="token operator">=</span><span class="token string">&quot;http://www.rsyslog.com&quot;</span><span class="token punctuation">]</span> rsyslogd was HUPed
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>这个是 rsyslogd 重新启动的时间，（因为 <code>/etc/logrotate.d/syslog</code> 中配置了重新启动的）</p> <h2 id="自定义日志文件的轮替功能"><a href="#自定义日志文件的轮替功能" class="header-anchor">#</a> 自定义日志文件的轮替功能</h2> <p>在前面章节总， 建立了一个 <code>/var/log/admin.log</code> 文件，需要配置如下需求</p> <ul><li>添加 <code>+a</code> 属性</li> <li>一个月轮替一次</li> <li>当文件大于 10MB 时，则主动轮替，不需要考虑一个月的时间</li> <li>保存 5 个备份文件</li> <li>备份文件需要压缩</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 1. 添加 a 属性，并测试是否有效</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># chattr +a /var/log/admin.log</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># lsattr /var/log/admin.log</span>
+-----a---------- /var/log/admin.log
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># rm /var/log/admin.log </span>
+rm: remove regular <span class="token function">file</span> <span class="token string">'/var/log/admin.log'</span>? y
+rm: cannot remove <span class="token string">'/var/log/admin.log'</span><span class="token builtin class-name">:</span> Operation not permitted
+<span class="token comment"># 连 root 都无法删除</span>
+
+<span class="token comment"># 2. 建立 logrotate 配置文件</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/logrotate.d/admin</span>
+/var/log/admin.log <span class="token punctuation">{</span>
+  monthly		<span class="token comment"># 每个月一次</span>
+  <span class="token assign-left variable">size</span><span class="token operator">=</span>10M	<span class="token comment"># 文件容量大于 10M 则开始处置</span>
+  rotate <span class="token number">5</span>	<span class="token comment"># 保留 5 个</span>
+  compress	<span class="token comment"># 压缩</span>
+  sharedscripts
+  prerotate
+        /usr/bin/chattr -a /var/log/admin.log
+  endscript
+  sharedscripts
+  postrotate
+  			<span class="token comment"># 就是这里，每个都要重新启动啊？难该服务启动得有点频繁啊</span>
+        /bin/kill -HUP <span class="token variable"><span class="token variable">`</span><span class="token function">cat</span> /var/run/syslogd.pid <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null<span class="token variable">`</span></span> <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> /dev/null <span class="token operator">||</span> <span class="token boolean">true</span>
+        /usr/bin/chattr +a /var/log/admin.log
+  endscript
+<span class="token punctuation">}</span>
+
+<span class="token comment"># 3. 测试下 logrotate 相关功能信息显示</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># logrotate -v /etc/logrotate.conf </span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># logrotate -v /etc/logrotate.conf             </span>
+reading config <span class="token function">file</span> /etc/logrotate.conf
+including /etc/logrotate.d
+reading config <span class="token function">file</span> admin		<span class="token comment"># 看到已经加载我们的配置文件了</span>
+<span class="token punctuation">..</span>.
+rotating pattern: /var/log/admin.log  <span class="token number">10485760</span> bytes <span class="token punctuation">(</span><span class="token number">5</span> rotations<span class="token punctuation">)</span>
+empty log files are rotated, old logs are removed
+considering log /var/log/admin.log
+  log does not need rotating <span class="token punctuation">(</span>log size is below the <span class="token string">'size'</span> threshold<span class="token punctuation">)</span>
+not running prerotate script, since no logs will be rotated
+<span class="token comment"># 可以看到，检测到 size 不够，不用处理</span>
+
+<span class="token comment"># 4. 强制执行 logrotate ，并查看相关信息</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># logrotate -vf /etc/logrotate.conf</span>
+rotating pattern: /var/log/admin.log  forced from <span class="token builtin class-name">command</span> line <span class="token punctuation">(</span><span class="token number">5</span> rotations<span class="token punctuation">)</span>
+empty log files are rotated, old logs are removed
+considering log /var/log/admin.log
+  log needs rotating
+rotating log /var/log/admin.log, log-<span class="token operator">&gt;</span>rotateCount is <span class="token number">5</span>
+dateext suffix <span class="token string">'-20200316'</span>
+glob pattern <span class="token string">'-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'</span>
+glob finding old rotated logs failed
+running prerotate script
+fscreate context <span class="token builtin class-name">set</span> to system_u:object_r:var_log_t:s0
+renaming /var/log/admin.log to /var/log/admin.log-20200316
+creating new /var/log/admin.log mode <span class="token operator">=</span> 0600 uid <span class="token operator">=</span> <span class="token number">0</span> gid <span class="token operator">=</span> <span class="token number">0</span>
+running postrotate script
+compressing log with: /bin/gzip
+<span class="token builtin class-name">set</span> default create context to system_u:object_r:var_log_t:s0
+
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># lsattr /var/log/admin.log*       </span>
+-----a---------- /var/log/admin.log
+---------------- /var/log/admin.log-20200316.gz
+<span class="token comment"># 可以看到的确被压缩过，当前的 a 属性也正常</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br></div></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/zq99299/linux-tutorial/edit/master/docs/tutorial-basis/18/03.md" target="_blank" rel="noopener noreferrer">帮助我们改善此页面！</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新: :</span> <span class="time">4 months ago</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/linux-tutorial/tutorial-basis/18/02.html" class="prev">
+        rsyslog.service 记录登录文件的服务
+      </a></span> <span class="next"><a href="/linux-tutorial/tutorial-basis/18/04.html">
+        systemd-journald.service 简介
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/linux-tutorial/assets/js/app.ea1d0a47.js" defer></script><script src="/linux-tutorial/assets/js/2.c8ccd0dd.js" defer></script><script src="/linux-tutorial/assets/js/42.dfe7a710.js" defer></script><script src="/linux-tutorial/assets/js/16.dd24774b.js" defer></script>
+  </body>
+</html>

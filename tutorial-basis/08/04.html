@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>XFS 文件系统的备份与还原 | Linux 系统教程（笔记）</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    
+    <meta name="description" content="linux 系统教程学习笔记">
+    <link rel="preload" href="/linux-tutorial/assets/css/0.styles.af9c0827.css" as="style"><link rel="preload" href="/linux-tutorial/assets/js/app.ea1d0a47.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/2.c8ccd0dd.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/82.695b7cfb.js" as="script"><link rel="preload" href="/linux-tutorial/assets/js/16.dd24774b.js" as="script"><link rel="prefetch" href="/linux-tutorial/assets/js/10.ef60d762.js"><link rel="prefetch" href="/linux-tutorial/assets/js/100.97bc2b5d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/101.351d7309.js"><link rel="prefetch" href="/linux-tutorial/assets/js/102.90e1e11e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/103.2305fc8c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/104.fdedff04.js"><link rel="prefetch" href="/linux-tutorial/assets/js/105.765b6a5e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/106.5b3371f0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/107.5f5db6f9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/108.fbdae5ff.js"><link rel="prefetch" href="/linux-tutorial/assets/js/109.d97d4053.js"><link rel="prefetch" href="/linux-tutorial/assets/js/11.3aac1a20.js"><link rel="prefetch" href="/linux-tutorial/assets/js/110.4a80f306.js"><link rel="prefetch" href="/linux-tutorial/assets/js/111.8a2c3fb4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/112.2b660b90.js"><link rel="prefetch" href="/linux-tutorial/assets/js/113.6af145de.js"><link rel="prefetch" href="/linux-tutorial/assets/js/114.fb21a791.js"><link rel="prefetch" href="/linux-tutorial/assets/js/115.850381dd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/116.c5a3c25c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/117.9c84a2f8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/118.2dea3311.js"><link rel="prefetch" href="/linux-tutorial/assets/js/119.67718ca2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/12.722033e9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/120.7954a798.js"><link rel="prefetch" href="/linux-tutorial/assets/js/121.85179870.js"><link rel="prefetch" href="/linux-tutorial/assets/js/122.fdbe08a8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/123.678347bb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/124.704fa8b1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/125.67c59043.js"><link rel="prefetch" href="/linux-tutorial/assets/js/126.3db4d3f7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/127.5873c269.js"><link rel="prefetch" href="/linux-tutorial/assets/js/128.30edd97c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/129.93064c6d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/13.69d35cba.js"><link rel="prefetch" href="/linux-tutorial/assets/js/130.fc5cf7b8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/131.d95b99d5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/132.5f4792dc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/133.20adfc72.js"><link rel="prefetch" href="/linux-tutorial/assets/js/134.7d02ff14.js"><link rel="prefetch" href="/linux-tutorial/assets/js/135.7c22cd89.js"><link rel="prefetch" href="/linux-tutorial/assets/js/136.91038e5b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/137.16d31ae4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/138.56430d58.js"><link rel="prefetch" href="/linux-tutorial/assets/js/139.4184fc0b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/14.607ce558.js"><link rel="prefetch" href="/linux-tutorial/assets/js/140.4a6210e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/141.58a7c0fb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/142.79dcb449.js"><link rel="prefetch" href="/linux-tutorial/assets/js/143.3a9b4aac.js"><link rel="prefetch" href="/linux-tutorial/assets/js/144.0b6cd3c4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/145.e43bec3a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/146.ff3782ab.js"><link rel="prefetch" href="/linux-tutorial/assets/js/147.b705dab5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/148.dada2306.js"><link rel="prefetch" href="/linux-tutorial/assets/js/149.a2532617.js"><link rel="prefetch" href="/linux-tutorial/assets/js/15.6186f1c1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/150.32974280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/151.b06857d0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/152.a5780795.js"><link rel="prefetch" href="/linux-tutorial/assets/js/153.51b6f5b4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/154.6fd3d1ce.js"><link rel="prefetch" href="/linux-tutorial/assets/js/155.4bc6bbee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/156.b68105fe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/157.23c06658.js"><link rel="prefetch" href="/linux-tutorial/assets/js/158.c6892788.js"><link rel="prefetch" href="/linux-tutorial/assets/js/159.f01c6fe5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/160.1fe7b7b2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/161.80f594f3.js"><link rel="prefetch" href="/linux-tutorial/assets/js/162.628b3ad5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/163.a983a5af.js"><link rel="prefetch" href="/linux-tutorial/assets/js/164.190ca3e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/165.8a93dcc6.js"><link rel="prefetch" href="/linux-tutorial/assets/js/166.81ada880.js"><link rel="prefetch" href="/linux-tutorial/assets/js/167.de10f0b4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/168.df7caf2a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/169.ca4df407.js"><link rel="prefetch" href="/linux-tutorial/assets/js/17.21277700.js"><link rel="prefetch" href="/linux-tutorial/assets/js/170.da2f114d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/171.be554271.js"><link rel="prefetch" href="/linux-tutorial/assets/js/172.b8349b6b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/173.1c5fb7fc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/174.1309c3c2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/175.dabeadfe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/176.dc2b1382.js"><link rel="prefetch" href="/linux-tutorial/assets/js/177.43492280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/178.e2ba1895.js"><link rel="prefetch" href="/linux-tutorial/assets/js/18.66c3dd23.js"><link rel="prefetch" href="/linux-tutorial/assets/js/19.dee99007.js"><link rel="prefetch" href="/linux-tutorial/assets/js/20.5cebeb18.js"><link rel="prefetch" href="/linux-tutorial/assets/js/21.fc404678.js"><link rel="prefetch" href="/linux-tutorial/assets/js/22.358b42ed.js"><link rel="prefetch" href="/linux-tutorial/assets/js/23.393a8dfc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/24.bdde7a66.js"><link rel="prefetch" href="/linux-tutorial/assets/js/25.7c436b9c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/26.67950be4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/27.8355597c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/28.a097854a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/29.be98c20b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/3.6fe464e4.js"><link rel="prefetch" href="/linux-tutorial/assets/js/30.1ee1ec2d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/31.f3306313.js"><link rel="prefetch" href="/linux-tutorial/assets/js/32.7cc8d2d2.js"><link rel="prefetch" href="/linux-tutorial/assets/js/33.a89f972e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/34.c7ce12be.js"><link rel="prefetch" href="/linux-tutorial/assets/js/35.463145fe.js"><link rel="prefetch" href="/linux-tutorial/assets/js/36.8a72f4b5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/37.96968c51.js"><link rel="prefetch" href="/linux-tutorial/assets/js/38.66e6607a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/39.5668451e.js"><link rel="prefetch" href="/linux-tutorial/assets/js/4.921fb6cc.js"><link rel="prefetch" href="/linux-tutorial/assets/js/40.173ac34f.js"><link rel="prefetch" href="/linux-tutorial/assets/js/41.bc977280.js"><link rel="prefetch" href="/linux-tutorial/assets/js/42.dfe7a710.js"><link rel="prefetch" href="/linux-tutorial/assets/js/43.4a74544d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/44.31e555e5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/45.21ba78bd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/46.1eee8453.js"><link rel="prefetch" href="/linux-tutorial/assets/js/47.7b5dd3b0.js"><link rel="prefetch" href="/linux-tutorial/assets/js/48.f5071610.js"><link rel="prefetch" href="/linux-tutorial/assets/js/49.d9de01e5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/5.c71c12e3.js"><link rel="prefetch" href="/linux-tutorial/assets/js/50.66b286cd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/51.8318e2ee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/52.4f0249a9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/53.3f24081d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/54.3ab2925b.js"><link rel="prefetch" href="/linux-tutorial/assets/js/55.04d08508.js"><link rel="prefetch" href="/linux-tutorial/assets/js/56.ba0ab8fb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/57.90ab3f74.js"><link rel="prefetch" href="/linux-tutorial/assets/js/58.ee41c106.js"><link rel="prefetch" href="/linux-tutorial/assets/js/59.289bec38.js"><link rel="prefetch" href="/linux-tutorial/assets/js/6.df51e7db.js"><link rel="prefetch" href="/linux-tutorial/assets/js/60.da6cf496.js"><link rel="prefetch" href="/linux-tutorial/assets/js/61.a0df86b5.js"><link rel="prefetch" href="/linux-tutorial/assets/js/62.ee5099e1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/63.6bf86d2c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/64.4ffe638f.js"><link rel="prefetch" href="/linux-tutorial/assets/js/65.d12dfecb.js"><link rel="prefetch" href="/linux-tutorial/assets/js/66.07c47ba9.js"><link rel="prefetch" href="/linux-tutorial/assets/js/67.2e420d6a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/68.3883a27d.js"><link rel="prefetch" href="/linux-tutorial/assets/js/69.fa8ef1e7.js"><link rel="prefetch" href="/linux-tutorial/assets/js/7.ada70172.js"><link rel="prefetch" href="/linux-tutorial/assets/js/70.6807cdfd.js"><link rel="prefetch" href="/linux-tutorial/assets/js/71.38ee562a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/72.b4800f40.js"><link rel="prefetch" href="/linux-tutorial/assets/js/73.71c5c5d1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/74.72192f58.js"><link rel="prefetch" href="/linux-tutorial/assets/js/75.1eea1037.js"><link rel="prefetch" href="/linux-tutorial/assets/js/76.c0fe2c48.js"><link rel="prefetch" href="/linux-tutorial/assets/js/77.ee0c5c75.js"><link rel="prefetch" href="/linux-tutorial/assets/js/78.25007bb8.js"><link rel="prefetch" href="/linux-tutorial/assets/js/79.7b0f0635.js"><link rel="prefetch" href="/linux-tutorial/assets/js/8.2392239c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/80.28ba4b5a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/81.87f7c17a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/83.c5bf5183.js"><link rel="prefetch" href="/linux-tutorial/assets/js/84.13ee5128.js"><link rel="prefetch" href="/linux-tutorial/assets/js/85.51847a80.js"><link rel="prefetch" href="/linux-tutorial/assets/js/86.41a8bf67.js"><link rel="prefetch" href="/linux-tutorial/assets/js/87.3412e840.js"><link rel="prefetch" href="/linux-tutorial/assets/js/88.f1b459ee.js"><link rel="prefetch" href="/linux-tutorial/assets/js/89.8f3f7604.js"><link rel="prefetch" href="/linux-tutorial/assets/js/9.d9ca4ba1.js"><link rel="prefetch" href="/linux-tutorial/assets/js/90.46ea834a.js"><link rel="prefetch" href="/linux-tutorial/assets/js/91.09b89aef.js"><link rel="prefetch" href="/linux-tutorial/assets/js/92.7e0eb989.js"><link rel="prefetch" href="/linux-tutorial/assets/js/93.60c7f110.js"><link rel="prefetch" href="/linux-tutorial/assets/js/94.323b3961.js"><link rel="prefetch" href="/linux-tutorial/assets/js/95.2b74a2ad.js"><link rel="prefetch" href="/linux-tutorial/assets/js/96.d8edbd19.js"><link rel="prefetch" href="/linux-tutorial/assets/js/97.a569039c.js"><link rel="prefetch" href="/linux-tutorial/assets/js/98.b41a3d34.js"><link rel="prefetch" href="/linux-tutorial/assets/js/99.86d37ca7.js">
+    <link rel="stylesheet" href="/linux-tutorial/assets/css/0.styles.af9c0827.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/linux-tutorial/" class="home-link router-link-active"><!----> <span class="site-name">Linux 系统教程（笔记）</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/linux-tutorial/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/linux-tutorial/tutorial-basis/" class="nav-link router-link-active">
+  鸟哥私房菜-基础篇
+</a></div><div class="nav-item"><a href="/linux-tutorial/discuss.html" class="nav-link">
+  参与讨论
+</a></div><div class="nav-item"><a href="https://github.com/zq99299/repository-summary" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  笔记精选汇总
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/zq99299/linux-tutorial" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/linux-tutorial/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/linux-tutorial/tutorial-basis/" class="nav-link router-link-active">
+  鸟哥私房菜-基础篇
+</a></div><div class="nav-item"><a href="/linux-tutorial/discuss.html" class="nav-link">
+  参与讨论
+</a></div><div class="nav-item"><a href="https://github.com/zq99299/repository-summary" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  笔记精选汇总
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/zq99299/linux-tutorial" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/linux-tutorial/tutorial-basis/" class="sidebar-link">Linux 基础篇（鸟哥私房菜）- 第四版</a></li><li><a href="/linux-tutorial/tutorial-basis/00/" class="sidebar-link">00. 计算机概论</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>01. Linux 是什么/如何学习</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>02. 主机规划与磁盘分区</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>03. 安装 CentOS 7.x</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>04. 首次登陆与线上求助</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>05. Linux 的文件权限与目录配置</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>06. Linux 文件与目录管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>07. Linux 磁盘与文件系统管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>08. 文件与文件系统的压缩、打包与备份</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/linux-tutorial/tutorial-basis/08/" class="sidebar-link">文件与文件系统的压缩、打包与备份</a></li><li><a href="/linux-tutorial/tutorial-basis/08/01.html" class="sidebar-link">压缩文件的用途与技术</a></li><li><a href="/linux-tutorial/tutorial-basis/08/02.html" class="sidebar-link">Linux 系统常用的压缩指令</a></li><li><a href="/linux-tutorial/tutorial-basis/08/03.html" class="sidebar-link">打包指令：tar</a></li><li><a href="/linux-tutorial/tutorial-basis/08/04.html" class="active sidebar-link">XFS 文件系统的备份与还原</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#xfs-文件系统备份-xfsdump" class="sidebar-link">XFS 文件系统备份 xfsdump</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#用-xfsdump-备份完整的文件系统" class="sidebar-link">用 xfsdump 备份完整的文件系统</a></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#用-xfsdump-进行增量备份（incremental-backups）" class="sidebar-link">用 xfsdump 进行增量备份（Incremental backups）</a></li></ul></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#xfs-文件系统还原-xfsrestore" class="sidebar-link">XFS 文件系统还原 xfsrestore</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#用-xfsrestore-观察-xfsdump-后的备份数据内容" class="sidebar-link">用 xfsrestore 观察 xfsdump 后的备份数据内容</a></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#简单复原-level-0-的文件系统" class="sidebar-link">简单复原 level 0 的文件系统</a></li></ul></li><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#复原增量备份资料" class="sidebar-link">复原增量备份资料</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/linux-tutorial/tutorial-basis/08/04.html#仅还原部分文件的-xfsrestore-互动模式" class="sidebar-link">仅还原部分文件的 xfsrestore 互动模式</a></li></ul></li></ul></li><li><a href="/linux-tutorial/tutorial-basis/08/05.html" class="sidebar-link">光盘写入工具</a></li><li><a href="/linux-tutorial/tutorial-basis/08/06.html" class="sidebar-link">其他常见的压缩与备份工具</a></li><li><a href="/linux-tutorial/tutorial-basis/08/07.html" class="sidebar-link">重点回顾</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>09. vim 程序编辑器</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>10. 认识与学习 BASH</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>11. 正则表达式与文件格式化处理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>12. 学习 Shell Scripts</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>13. Linux 账号管理与 ACL 权限设置</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>14. 磁盘配额（Quota）与进阶文件系统管理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>15. 例行性工作排程（crontab）</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>16. 进程管理与 SELinux 初探</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>17. 认识系统服务（daemons）</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>18. 认识与分析登录文件</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>19. 开机流程、模块管理与 Loader</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>20. 基础系统设置与备份策略</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>21. 软件安装：原始码与 Tarball</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>22. 软件安装 RPM、SRPM、YUM</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="xfs-文件系统的备份与还原"><a href="#xfs-文件系统的备份与还原" class="header-anchor">#</a> XFS 文件系统的备份与还原</h1> <p>使用 tar 通常是针对目录树系统来进行备份的工作，如果是针对整个文件系统来进行备份与还原。在 CentOS 7 中可以使用 xfsdump 与 xfsrestore 指令来进行</p> <h2 id="xfs-文件系统备份-xfsdump"><a href="#xfs-文件系统备份-xfsdump" class="header-anchor">#</a> XFS 文件系统备份 xfsdump</h2> <p>支持的功能：</p> <ul><li><p>全量备份：完整备份文件系统（full backup）</p></li> <li><p>增量备份：Incremental backup</p> <p>第一次全量备份之后，就可以选择增量备份了</p> <p>增量备份的差异文件存放在 /var/lib/xfsdump/inventory 中</p></li></ul> <p>xfsdump 有如下限制：</p> <ul><li>不支持没有挂载的文件系统备份，所以只能备份已挂载的</li> <li>必须使用 root 的权限才能操作，涉及文件系统的关系</li> <li>只能备份 XFS 文件系统</li> <li>备份下来的数据（文件或存储媒体）只能让 xfsrestore 解析</li> <li>是通过文件系统的 UUID 来分辨各个备份档的，因此不能备份两个具有相同 UUID 的文件系统</li></ul> <p>简单操作时的语法如下（完整的选项非常复杂）</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>xfsdump <span class="token punctuation">[</span>-L S_label<span class="token punctuation">]</span><span class="token punctuation">[</span>-M M_label<span class="token punctuation">]</span><span class="token punctuation">[</span>-l <span class="token comment">#][-f 备份档] 带备份资料</span>
+xfsdump -I
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>选项与参数：</p> <ul><li>L：xfsdump 会记录每次备份的 session 标头，这里可以填写针对此文件系统的建议说明</li> <li>M：xfsdump 可以记录存储媒体的标头，这里可以填写此媒体的建议说明</li> <li>l：小写的 L，指定等级。有 0~9 共 10 个等级，预设为 0 完整备份</li> <li>f：有点类似 tar，后面接产生的文件，例如 /dev/st0 装置文件名或其他一般文件名等</li> <li>I：从 /var/lib/xfsdump/inventory 列出目前备份的信息状态</li></ul> <p>注意：xfsdump 预设仅支持文件系统的备份，并不支持目录的备份。如 /etc 不是一个独立的文件系统</p> <h3 id="用-xfsdump-备份完整的文件系统"><a href="#用-xfsdump-备份完整的文件系统" class="header-anchor">#</a> 用 xfsdump 备份完整的文件系统</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 1. 先确定 /boot 是独立的问价系统</span>
+<span class="token punctuation">[</span>mrcode@study ~<span class="token punctuation">]</span>$ <span class="token function">df</span> -h /boot/
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2      1014M  171M  844M  <span class="token number">17</span>% /boot
+<span class="token comment"># 挂载点是 /boot 文件系统是 /dev/sda2 装置，是独立的文件系统</span>
+
+<span class="token comment"># 2. 将完整备份的文件名记录为 /srv/boot.dump</span>
+<span class="token comment"># 指定了一个等级0，后面 lm 都是说明，后面是要保存的文件地址，最后是要备份的装置</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsdump -l 0 -L boot_all -M boot_all -f /srv/boot.dump /boot</span>
+xfsdump: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsdump: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsdump: level <span class="token number">0</span> dump of study.centos.mrcode:/boot	<span class="token comment"># level 0 开始备份本机 /boot 系统	</span>
+xfsdump: dump date: Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>  <span class="token comment"># 备份时间</span>
+xfsdump: session id: 49ac1ac5-c63b-4778-9b87-f77f3b1d703a <span class="token comment"># dump 的 ID</span>
+xfsdump: session label: <span class="token string">&quot;boot_all&quot;</span>	<span class="token comment"># 上面写的说明</span>
+xfsdump: ino map phase <span class="token number">1</span>: constructing initial dump list <span class="token comment"># 开始备份</span>
+xfsdump: ino map phase <span class="token number">2</span>: skipping <span class="token punctuation">(</span>no pruning necessary<span class="token punctuation">)</span>
+xfsdump: ino map phase <span class="token number">3</span>: skipping <span class="token punctuation">(</span>only one dump stream<span class="token punctuation">)</span>
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: <span class="token number">144381568</span> bytes
+xfsdump: /var/lib/xfsdump/inventory created
+xfsdump: creating dump session media <span class="token function">file</span> <span class="token number">0</span> <span class="token punctuation">(</span>media <span class="token number">0</span>, <span class="token function">file</span> <span class="token number">0</span><span class="token punctuation">)</span>
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsdump: dumping non-directory files
+xfsdump: ending media <span class="token function">file</span>
+xfsdump: media <span class="token function">file</span> size <span class="token number">144048736</span> bytes
+xfsdump: dump size <span class="token punctuation">(</span>non-dir files<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> <span class="token number">143807160</span> bytes
+xfsdump: dump complete: <span class="token number">1</span> seconds elapsed
+xfsdump: Dump Summary:
+xfsdump:   stream <span class="token number">0</span> /srv/boot.dump OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsdump: Dump Status: SUCCESS
+<span class="token comment"># 如果不在指令中增加 -L 和 -M 会进入互动模式，让你手动填写确认后才会开始备份</span>
+
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ll /srv/boot.dump </span>
+-rw-r--r--. <span class="token number">1</span> root root <span class="token number">144048736</span> <span class="token number">10</span>月 <span class="token number">29</span> 03:03 /srv/boot.dump
+
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ll /var/lib/xfsdump/inventory/</span>
+总用量 <span class="token number">16</span>
+-rw-r--r--. <span class="token number">1</span> root root  <span class="token number">312</span> <span class="token number">10</span>月 <span class="token number">29</span> 03:03 13d0663f-4cbd-412d-aa9f-975eb18da590.InvIndex
+-rw-r--r--. <span class="token number">1</span> root root <span class="token number">5080</span> <span class="token number">10</span>月 <span class="token number">29</span> 03:03 6ad3d9fa-9c06-4968-9250-c1a70b5629ed.StObj
+-rw-r--r--. <span class="token number">1</span> root root  <span class="token number">576</span> <span class="token number">10</span>月 <span class="token number">29</span> 03:03 fstab
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><h3 id="用-xfsdump-进行增量备份（incremental-backups）"><a href="#用-xfsdump-进行增量备份（incremental-backups）" class="header-anchor">#</a> 用 xfsdump 进行增量备份（Incremental backups）</h3> <p>增量是在全量的基础上，也就是至少有 level 0 ，才能够几区有其他的增量备份（1~9）</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看 xfsdump 信息</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsdump -I</span>
+<span class="token function">file</span> system <span class="token number">0</span>:
+        fs id:          13d0663f-4cbd-412d-aa9f-975eb18da590
+        session <span class="token number">0</span>:
+                <span class="token function">mount</span> point:    study.centos.mrcode:/boot
+                device:         study.centos.mrcode:/dev/sda2
+                time:           Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>
+                session label:  <span class="token string">&quot;boot_all&quot;</span>
+                session id:     49ac1ac5-c63b-4778-9b87-f77f3b1d703a
+                level:          <span class="token number">0</span>
+                resumed:        NO
+                subtree:        NO
+                streams:        <span class="token number">1</span>
+                stream <span class="token number">0</span>:
+                        pathname:       /srv/boot.dump
+                        start:          ino <span class="token number">69</span> offset <span class="token number">0</span>
+                        end:            ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                        interrupted:    NO
+                        media files:    <span class="token number">1</span>
+                        media <span class="token function">file</span> <span class="token number">0</span>:
+                                mfile index:    <span class="token number">0</span>
+                                mfile type:     data
+                                mfile size:     <span class="token number">144048736</span>
+                                mfile start:    ino <span class="token number">69</span> offset <span class="token number">0</span>
+                                mfile end:      ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                                media label:    <span class="token string">&quot;boot_all&quot;</span>
+                                media id:       da10035c-1c0b-4773-a56e-409a17fe9913
+xfsdump: Dump Status: SUCCESS
+
+<span class="token comment"># 可以看到，有一个 level 0</span>
+<span class="token comment"># 下面先在 boot 中建立一个大约 10MB 的文件</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># dd if=/dev/zero of=/boot/testing.img bs=1M count=10</span>
+记录了10+0 的读入
+记录了10+0 的写出
+<span class="token number">10485760</span>字节<span class="token punctuation">(</span><span class="token number">10</span> MB<span class="token punctuation">)</span>已复制，0.00396854 秒，2.6 GB/秒
+
+<span class="token comment"># 2. 建立差异备份，这里使用 -l 1 指定了 level 1 的被增量备份</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># dd if=/dev/zero of=/boot/testing.img bs=1M count=10</span>
+记录了10+0 的读入
+记录了10+0 的写出
+<span class="token number">10485760</span>字节<span class="token punctuation">(</span><span class="token number">10</span> MB<span class="token punctuation">)</span>已复制，0.00396854 秒，2.6 GB/秒
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsdump -l 1 -L boot_2 -M boot_2 -f /srv/boot.dump1 /boot</span>
+xfsdump: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsdump: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsdump: level <span class="token number">1</span> incremental dump of study.centos.mrcode:/boot based on level <span class="token number">0</span> dump begun Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>
+xfsdump: dump date: Tue Oct <span class="token number">29</span> 03:11:00 <span class="token number">2019</span>
+xfsdump: session id: 8a8a1680-2a91-4292-943d-0d0a51fa2d67
+xfsdump: session label: <span class="token string">&quot;boot_2&quot;</span>
+xfsdump: ino map phase <span class="token number">1</span>: constructing initial dump list
+xfsdump: ino map phase <span class="token number">2</span>: pruning unneeded subtrees
+xfsdump: ino map phase <span class="token number">3</span>: skipping <span class="token punctuation">(</span>only one dump stream<span class="token punctuation">)</span>
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: <span class="token number">10506880</span> bytes
+xfsdump: creating dump session media <span class="token function">file</span> <span class="token number">0</span> <span class="token punctuation">(</span>media <span class="token number">0</span>, <span class="token function">file</span> <span class="token number">0</span><span class="token punctuation">)</span>
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsdump: dumping non-directory files
+xfsdump: ending media <span class="token function">file</span>
+xfsdump: media <span class="token function">file</span> size <span class="token number">10510952</span> bytes
+xfsdump: dump size <span class="token punctuation">(</span>non-dir files<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> <span class="token number">10488408</span> bytes
+xfsdump: dump complete: <span class="token number">0</span> seconds elapsed
+xfsdump: Dump Summary:
+xfsdump:   stream <span class="token number">0</span> /srv/boot.dump1 OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsdump: Dump Status: SUCCESS
+
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ll -h /srv/boot*</span>
+-rw-r--r--. <span class="token number">1</span> root root 138M <span class="token number">10</span>月 <span class="token number">29</span> 03:03 /srv/boot.dump
+-rw-r--r--. <span class="token number">1</span> root root  11M <span class="token number">10</span>月 <span class="token number">29</span> 03:11 /srv/boot.dump1
+
+<span class="token comment"># 3. 最后再观察下备份情况</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsdump -I</span>
+<span class="token function">file</span> system <span class="token number">0</span>:
+        fs id:          13d0663f-4cbd-412d-aa9f-975eb18da590
+        session <span class="token number">0</span>:
+                <span class="token function">mount</span> point:    study.centos.mrcode:/boot
+                device:         study.centos.mrcode:/dev/sda2
+                time:           Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>
+                session label:  <span class="token string">&quot;boot_all&quot;</span>
+                session id:     49ac1ac5-c63b-4778-9b87-f77f3b1d703a
+                level:          <span class="token number">0</span>
+                resumed:        NO
+                subtree:        NO
+                streams:        <span class="token number">1</span>
+                stream <span class="token number">0</span>:
+                        pathname:       /srv/boot.dump
+                        start:          ino <span class="token number">69</span> offset <span class="token number">0</span>
+                        end:            ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                        interrupted:    NO
+                        media files:    <span class="token number">1</span>
+                        media <span class="token function">file</span> <span class="token number">0</span>:
+                                mfile index:    <span class="token number">0</span>
+                                mfile type:     data
+                                mfile size:     <span class="token number">144048736</span>
+                                mfile start:    ino <span class="token number">69</span> offset <span class="token number">0</span>
+                                mfile end:      ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                                media label:    <span class="token string">&quot;boot_all&quot;</span>
+                                media id:       da10035c-1c0b-4773-a56e-409a17fe9913
+        session <span class="token number">1</span>:
+                <span class="token function">mount</span> point:    study.centos.mrcode:/boot
+                device:         study.centos.mrcode:/dev/sda2
+                time:           Tue Oct <span class="token number">29</span> 03:11:00 <span class="token number">2019</span>
+                session label:  <span class="token string">&quot;boot_2&quot;</span>
+                session id:     8a8a1680-2a91-4292-943d-0d0a51fa2d67
+                level:          <span class="token number">1</span>
+                resumed:        NO
+                subtree:        NO
+                streams:        <span class="token number">1</span>
+                stream <span class="token number">0</span>:
+                        pathname:       /srv/boot.dump1
+                        start:          ino <span class="token number">113</span> offset <span class="token number">0</span>
+                        end:            ino <span class="token number">114</span> offset <span class="token number">0</span>
+                        interrupted:    NO
+                        media files:    <span class="token number">1</span>
+                        media <span class="token function">file</span> <span class="token number">0</span>:
+                                mfile index:    <span class="token number">0</span>
+                                mfile type:     data
+                                mfile size:     <span class="token number">10510952</span>
+                                mfile start:    ino <span class="token number">113</span> offset <span class="token number">0</span>
+                                mfile end:      ino <span class="token number">114</span> offset <span class="token number">0</span>
+                                media label:    <span class="token string">&quot;boot_2&quot;</span>
+                                media id:       2c0d4e02-11cd-45a4-b131-8bc6505403fe
+xfsdump: Dump Status: SUCCESS
+<span class="token comment"># 可以看到上面出现了 session 1 和 level 1</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br></div></div><h2 id="xfs-文件系统还原-xfsrestore"><a href="#xfs-文件系统还原-xfsrestore" class="header-anchor">#</a> XFS 文件系统还原 xfsrestore</h2> <p>备份文件就是在急用时可以还原系统的重要数据，用 xfsdump 备份的数据可以使用 xfsresotre 来还原</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>xfsrestore -I	<span class="token comment"># 观察备份文件资料</span>
+xfsrestore <span class="token punctuation">[</span>-f 备份文件名<span class="token punctuation">]</span><span class="token punctuation">[</span>-L S_label<span class="token punctuation">]</span><span class="token punctuation">[</span>-s<span class="token punctuation">]</span> 待复原的目录  <span class="token comment"># 单一文件全系统复原</span>
+xfsrestore <span class="token punctuation">[</span>-f 备份文件名<span class="token punctuation">]</span> -r 待复原目录	<span class="token comment"># 通过增量备份文件复原系统</span>
+xfsrestore <span class="token punctuation">[</span>-f 备份文件名<span class="token punctuation">]</span> -i 待复原目录	<span class="token comment"># 进入互动模式</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>选项与参数：</p> <ul><li>I：与 xfsdump 相同的输出</li> <li>f：后面接的就是备份的文件，企业界可能会接 /dev/st0 等磁带机，我们这里接文件名</li> <li>L：session 的 label name ，就是在 -I 输出中查询到的数据</li> <li>s：需要接特定目录，复原某一个文件或目录的意思</li> <li>r：如果是用文件来存储备份数据，这个选项就不需要使用。如果是一个磁带内有多个文件，需要这东西来达成增量复原</li> <li>i：进入互动模式，进阶管理员使用的，一般我们不太需要操作它</li></ul> <h3 id="用-xfsrestore-观察-xfsdump-后的备份数据内容"><a href="#用-xfsrestore-观察-xfsdump-后的备份数据内容" class="header-anchor">#</a> 用 xfsrestore 观察 xfsdump 后的备份数据内容</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -I</span>
+<span class="token function">file</span> system <span class="token number">0</span>:
+        fs id:          13d0663f-4cbd-412d-aa9f-975eb18da590
+        session <span class="token number">0</span>:
+                <span class="token function">mount</span> point:    study.centos.mrcode:/boot
+                device:         study.centos.mrcode:/dev/sda2
+                time:           Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>
+                session label:  <span class="token string">&quot;boot_all&quot;</span>
+                session id:     49ac1ac5-c63b-4778-9b87-f77f3b1d703a
+                level:          <span class="token number">0</span>
+                resumed:        NO
+                subtree:        NO
+                streams:        <span class="token number">1</span>
+                stream <span class="token number">0</span>:
+                        pathname:       /srv/boot.dump
+                        start:          ino <span class="token number">69</span> offset <span class="token number">0</span>
+                        end:            ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                        interrupted:    NO
+                        media files:    <span class="token number">1</span>
+                        media <span class="token function">file</span> <span class="token number">0</span>:
+                                mfile index:    <span class="token number">0</span>
+                                mfile type:     data
+                                mfile size:     <span class="token number">144048736</span>
+                                mfile start:    ino <span class="token number">69</span> offset <span class="token number">0</span>
+                                mfile end:      ino <span class="token number">1577745</span> offset <span class="token number">0</span>
+                                media label:    <span class="token string">&quot;boot_all&quot;</span>
+                                media id:       da10035c-1c0b-4773-a56e-409a17fe9913
+        session <span class="token number">1</span>:
+								<span class="token function">mount</span> point:    study.centos.mrcode:/boot
+                device:         study.centos.mrcode:/dev/sda2
+                time:           Tue Oct <span class="token number">29</span> 03:11:00 <span class="token number">2019</span>
+                session label:  <span class="token string">&quot;boot_2&quot;</span>
+                session id:     8a8a1680-2a91-4292-943d-0d0a51fa2d67
+                level:          <span class="token number">1</span>
+                resumed:        NO
+                subtree:        NO
+                streams:        <span class="token number">1</span>
+                stream <span class="token number">0</span>:
+                        pathname:       /srv/boot.dump1
+                        start:          ino <span class="token number">113</span> offset <span class="token number">0</span>
+                        end:            ino <span class="token number">114</span> offset <span class="token number">0</span>
+                        interrupted:    NO
+                        media files:    <span class="token number">1</span>
+                        media <span class="token function">file</span> <span class="token number">0</span>:
+                                mfile index:    <span class="token number">0</span>
+                                mfile type:     data
+                                mfile size:     <span class="token number">10510952</span>
+                                mfile start:    ino <span class="token number">113</span> offset <span class="token number">0</span>
+                                mfile end:      ino <span class="token number">114</span> offset <span class="token number">0</span>
+                                media label:    <span class="token string">&quot;boot_2&quot;</span>
+                                media id:       2c0d4e02-11cd-45a4-b131-8bc6505403fe
+xfsrestore: Restore Status: SUCCESS
+<span class="token comment"># 和前面输出的一样</span>
+<span class="token comment"># 这里重点是看到这个文件系统是 /boot 挂载点，有两个备份 level 0 和 level 1</span>
+<span class="token comment"># 可以看到这两个备份文件的大小，更重要的是 session label</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div></div><h3 id="简单复原-level-0-的文件系统"><a href="#简单复原-level-0-的文件系统" class="header-anchor">#</a> 简单复原 level 0 的文件系统</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 1. 直接将数据覆盖回去即可</span>
+<span class="token comment"># 这里使用了 -L 就是那个 session label</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -f /srv/boot.dump -L boot_all /boot</span>
+xfsrestore: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsrestore: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsrestore: using online session inventory
+xfsrestore: searching media <span class="token keyword">for</span> directory dump
+xfsrestore: examining media <span class="token function">file</span> <span class="token number">0</span>
+xfsrestore: reading directories
+xfsrestore: <span class="token number">11</span> directories and <span class="token number">337</span> entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: <span class="token number">0</span> seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream <span class="token number">0</span> /srv/boot.dump OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsrestore: Restore Status: SUCCESS
+
+<span class="token comment"># 2. 将备份资料在 /tmp/boot 下解开</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># mkdir /tmp/boot</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -f /srv/boot.dump -L boot_all /tmp/boot/</span>
+xfsrestore: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsrestore: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsrestore: using online session inventory
+xfsrestore: searching media <span class="token keyword">for</span> directory dump
+xfsrestore: examining media <span class="token function">file</span> <span class="token number">0</span>
+xfsrestore: reading directories
+xfsrestore: <span class="token number">11</span> directories and <span class="token number">337</span> entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: <span class="token number">0</span> seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream <span class="token number">0</span> /srv/boot.dump OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsrestore: Restore Status: SUCCESS
+
+<span class="token comment"># 看到两个大小不一致</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># du -sm /boot/ /tmp/boot/</span>
+<span class="token number">148</span>     /boot/
+<span class="token number">138</span>     /tmp/boot/
+
+<span class="token comment"># 对比下发现 /boot 下多了一个 testing.img</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># diff -r /boot/ /tmp/boot/</span>
+只在 /boot/ 存在：testing.img
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><p>这里注意了，笔者以为这样复原之后，会完全还原到复原之前的内容的，这里的规则是：<strong>同名的文件被覆盖，其他系统内的新的问价会被保留</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 3. 仅复原备份档内的 grub2 到 /tmp/boot2 里面去</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># mkdir /tmp/boot2</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -f /srv/boot.dump -L boot_all -s grub2 /tmp/boot2</span>
+xfsrestore: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsrestore: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsrestore: using online session inventory
+xfsrestore: searching media <span class="token keyword">for</span> directory dump
+xfsrestore: examining media <span class="token function">file</span> <span class="token number">0</span>
+xfsrestore: reading directories
+xfsrestore: <span class="token number">11</span> directories and <span class="token number">337</span> entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: <span class="token number">0</span> seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream <span class="token number">0</span> /srv/boot.dump OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsrestore: Restore Status: SUCCESS
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ll -h /tmp/boot2/</span>
+总用量 <span class="token number">0</span>
+drwx------. <span class="token number">5</span> root root <span class="token number">97</span> <span class="token number">10</span>月  <span class="token number">4</span> <span class="token number">18</span>:32 grub2
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h2 id="复原增量备份资料"><a href="#复原增量备份资料" class="header-anchor">#</a> 复原增量备份资料</h2> <p>增量还原有顺序，比如由 level 0 -&gt; level1 -&gt; level2 那么还原的时候，也需要按照这个顺序</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -f /srv/boot.dump1 /tmp/boot</span>
+xfsrestore: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsrestore: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsrestore: searching media <span class="token keyword">for</span> dump
+xfsrestore: examining media <span class="token function">file</span> <span class="token number">0</span>
+xfsrestore: dump description: 
+xfsrestore: hostname: study.centos.mrcode
+xfsrestore: <span class="token function">mount</span> point: /boot
+xfsrestore: volume: /dev/sda2
+xfsrestore: session time: Tue Oct <span class="token number">29</span> 03:11:00 <span class="token number">2019</span>
+xfsrestore: level: <span class="token number">1</span>
+xfsrestore: session label: <span class="token string">&quot;boot_2&quot;</span>
+xfsrestore: media label: <span class="token string">&quot;boot_2&quot;</span>
+xfsrestore: <span class="token function">file</span> system id: 13d0663f-4cbd-412d-aa9f-975eb18da590
+xfsrestore: session id: 8a8a1680-2a91-4292-943d-0d0a51fa2d67
+xfsrestore: media id: 2c0d4e02-11cd-45a4-b131-8bc6505403fe
+xfsrestore: using online session inventory
+xfsrestore: searching media <span class="token keyword">for</span> directory dump
+xfsrestore: reading directories
+xfsrestore: <span class="token number">1</span> directories and <span class="token number">12</span> entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: <span class="token number">0</span> seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream <span class="token number">0</span> /srv/boot.dump1 OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsrestore: Restore Status: SUCCESS
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h3 id="仅还原部分文件的-xfsrestore-互动模式"><a href="#仅还原部分文件的-xfsrestore-互动模式" class="header-anchor">#</a> 仅还原部分文件的 xfsrestore 互动模式</h3> <p>使用 -s 参数可以接部分数据来还原，当文件太多时，又不知道里面有哪些文件，可以使用互动模式，比如想要知道 level0 的备份数据里面有哪些东西</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># xfsrestore -f /srv/boot.dump -i /tmp/boot3</span>
+xfsrestore: using <span class="token function">file</span> dump <span class="token punctuation">(</span>drive_simple<span class="token punctuation">)</span> strategy
+xfsrestore: version <span class="token number">3.1</span>.7 <span class="token punctuation">(</span>dump <span class="token function">format</span> <span class="token number">3.0</span><span class="token punctuation">)</span> - <span class="token builtin class-name">type</span> ^C <span class="token keyword">for</span> status and control
+xfsrestore: searching media <span class="token keyword">for</span> dump
+xfsrestore: examining media <span class="token function">file</span> <span class="token number">0</span>
+xfsrestore: dump description: 
+xfsrestore: hostname: study.centos.mrcode
+xfsrestore: <span class="token function">mount</span> point: /boot
+xfsrestore: volume: /dev/sda2
+xfsrestore: session time: Tue Oct <span class="token number">29</span> 03:03:50 <span class="token number">2019</span>
+xfsrestore: level: <span class="token number">0</span>
+xfsrestore: session label: <span class="token string">&quot;boot_all&quot;</span>
+xfsrestore: media label: <span class="token string">&quot;boot_all&quot;</span>
+xfsrestore: <span class="token function">file</span> system id: 13d0663f-4cbd-412d-aa9f-975eb18da590
+xfsrestore: session id: 49ac1ac5-c63b-4778-9b87-f77f3b1d703a
+xfsrestore: media id: da10035c-1c0b-4773-a56e-409a17fe9913
+xfsrestore: using online session inventory
+xfsrestore: searching media <span class="token keyword">for</span> directory dump
+xfsrestore: reading directories
+xfsrestore: <span class="token number">11</span> directories and <span class="token number">337</span> entries processed
+xfsrestore: directory post-processing
+
+ <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> subtree selection dialog <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+the following commands are available:
+        <span class="token builtin class-name">pwd</span> 
+        <span class="token function">ls</span> <span class="token punctuation">[</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> <span class="token punctuation">]</span>
+        <span class="token builtin class-name">cd</span> <span class="token punctuation">[</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> <span class="token punctuation">]</span>
+        <span class="token function">add</span> <span class="token punctuation">[</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> <span class="token punctuation">]</span>		<span class="token comment"># 可以加入还原文件列表中</span>
+        delete <span class="token punctuation">[</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> <span class="token punctuation">]</span> <span class="token comment"># 从还原列表中删除文件，不是删除，只是从列表中移出去</span>
+        extract 	<span class="token comment"># 开始还原动作</span>
+        quit 
+        <span class="token builtin class-name">help</span> 
+
+-<span class="token operator">&gt;</span> <span class="token function">ls</span>		<span class="token comment"># ls 查看有哪些文档</span>
+              <span class="token number">75</span> initramfs-3.10.0-1062.el7.x86_64.img 
+              <span class="token number">77</span> vmlinuz-0-rescue-f228ab37c368416c84c6b27971ba45a9 
+              <span class="token number">76</span> initramfs-0-rescue-f228ab37c368416c84c6b27971ba45a9.img 
+              <span class="token number">74</span> vmlinuz-3.10.0-1062.el7.x86_64 
+              <span class="token number">73</span> symvers-3.10.0-1062.el7.x86_64.gz 
+              <span class="token number">72</span> config-3.10.0-1062.el7.x86_64 
+              <span class="token number">71</span> System.map-3.10.0-1062.el7.x86_64 
+              <span class="token number">70</span> .vmlinuz-3.10.0-1062.el7.x86_64.hmac 
+              <span class="token number">68</span> grub/
+         <span class="token number">1572928</span> grub2/
+              <span class="token number">67</span> efi/
+
+ -<span class="token operator">&gt;</span> <span class="token function">add</span> grub/
+
+ -<span class="token operator">&gt;</span> <span class="token function">add</span> grub2/
+
+ -<span class="token operator">&gt;</span> <span class="token function">add</span> config-3.10.0-229.el7.x86_64
+config-3.10.0-229.el7.x86_64 not found			<span class="token comment"># 这个里面不能按退格键，我输出了，不过提示未找到</span>
+
+ -<span class="token operator">&gt;</span> extract
+ --------------------------------- end dialog ---------------------------------
+
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: <span class="token number">182</span> seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream <span class="token number">0</span> /srv/boot.dump OK <span class="token punctuation">(</span>success<span class="token punctuation">)</span>
+xfsrestore: Restore Status: SUCCESS
+
+<span class="token comment"># 查看还原的目录下，的确只有我们需要的两个</span>
+<span class="token punctuation">[</span>root@study ~<span class="token punctuation">]</span><span class="token comment"># ls -l /tmp/boot3</span>
+总用量 <span class="token number">0</span>
+drwxr-xr-x. <span class="token number">2</span> root root <span class="token number">27</span> <span class="token number">10</span>月  <span class="token number">4</span> <span class="token number">18</span>:22 grub
+drwx------. <span class="token number">5</span> root root <span class="token number">97</span> <span class="token number">10</span>月  <span class="token number">4</span> <span class="token number">18</span>:32 grub2
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br></div></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/zq99299/linux-tutorial/edit/master/docs/tutorial-basis/08/04.md" target="_blank" rel="noopener noreferrer">帮助我们改善此页面！</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新: :</span> <span class="time">8 months ago</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/linux-tutorial/tutorial-basis/08/03.html" class="prev">
+        打包指令：tar
+      </a></span> <span class="next"><a href="/linux-tutorial/tutorial-basis/08/05.html">
+        光盘写入工具
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/linux-tutorial/assets/js/app.ea1d0a47.js" defer></script><script src="/linux-tutorial/assets/js/2.c8ccd0dd.js" defer></script><script src="/linux-tutorial/assets/js/82.695b7cfb.js" defer></script><script src="/linux-tutorial/assets/js/16.dd24774b.js" defer></script>
+  </body>
+</html>
