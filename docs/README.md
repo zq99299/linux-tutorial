@@ -12,7 +12,7 @@ features:
   details: 每天至少一小时学习时间，能让你不断的进步
 footer: MIT Licensed | Copyright © mrcode
 ---
-
+自动构建测试
 
 ## 内容导航
 
