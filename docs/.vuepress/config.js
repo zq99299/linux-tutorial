@@ -54,7 +54,13 @@ module.exports = {
       { text: 'Home', link: '/' },
       { text: '鸟哥私房菜-基础篇', link: '/tutorial-basis/' },
       { text: '参与讨论', link: '/discuss.md' },
-      { text: '笔记精选汇总', link: 'https://github.com/zq99299/repository-summary' }
+      {
+        text: '笔记精选汇总',
+        items: [
+          { text: 'GitHub 站', link: 'https://github.com/zq99299/repository-summary' },
+          { text: '国内镜像站', link: 'http://book.mrcode.cn/' }
+        ]
+      }
     ],
     sidebar: {  // 侧边栏配置，需要展示的侧边栏需要在这里配置
       '/tutorial-basis/': tutorialBasisSC()
