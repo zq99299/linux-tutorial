@@ -15,6 +15,10 @@ module.exports = {
   //     //     lang: 'zh-CN', // 将会被设置为 <html> 的 lang 属性
   //     // }
   // },
+  head:[
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'manifest', href: '/manifest.json' }],
+  ],
   markdown: {
     lineNumbers: true
   },
@@ -41,6 +45,7 @@ module.exports = {
     editLinks: true,
     // 默认为 "Edit this page"
     editLinkText: '帮助我们改善此页面！',
+    logo: 'MLOGO40x40.png',
     // 主题级别的配置
     serviceWorker: {
       updatePopup: true // Boolean | Object, 默认值是 undefined.

@@ -1,5 +1,6 @@
 ---
 home: true
+heroImage: MLOGO200x200.png
 heroImage: /hero.png
 actionText: 计算机概述
 actionLink: /tutorial-basis/00/
