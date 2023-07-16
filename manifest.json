@@ -1,0 +1,25 @@
+{
+  "name": "LINUX-TUTORIAL",
+  "short_name": "LINUX-TUTORIAL",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "linux 系列教程的笔记",
+  "icons": [
+    {
+      "src": "mlogo.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "mlogo.svg",
+      "sizes": "100x100",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "mlogo.svg",
+      "sizes": "200x200",
+      "type": "image/svg+xml"
+    }
+  ]
+}
