@@ -1,7 +1,6 @@
 ---
 home: true
 heroImage: mlogo.svg
-heroImage: /hero.png
 actionText: 计算机概述
 actionLink: /tutorial-basis/00/
 features:
